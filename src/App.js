@@ -59,6 +59,7 @@ const FilePicker = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    resArr.sort((a, b) => a.Serial_No - b.Serial_No);
     const worksheet = utils.json_to_sheet(resArr);
     const workbook = utils.book_new();
     utils.book_append_sheet(workbook, worksheet, "Valuation");
