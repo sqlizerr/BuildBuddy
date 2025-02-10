@@ -26,6 +26,8 @@ const FilePicker = () => {
         const worksheet = workbook.Sheets[sheetName];
         const jsonData = utils.sheet_to_json(worksheet, { header: 1 });
         setExcelData(jsonData);
+        console.log(jsonData);
+        console.log(excelData);
       };
 
       reader.readAsArrayBuffer(selectedFile);
@@ -43,11 +45,13 @@ const FilePicker = () => {
         setResArr((prevResArr) => [
           ...prevResArr,
           {
-            Serial_No: x[0],
-            Service_Number: x[1],
+            Sr_No: x[0],
             Description: x[2],
+            Service_No: x[1],
+            HSN: "995419",
             Quantity: input2,
-            Unit_Price: x[6],
+            Unit: x[4],
+            Rate: x[6],
             Total_Price: input2 * x[6],
           },
         ]);
@@ -59,7 +63,8 @@ const FilePicker = () => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    resArr.sort((a, b) => a.Serial_No - b.Serial_No);
+    resArr.sort((a, b) => a.Sr_No - b.Sr_No);
+
     const worksheet = utils.json_to_sheet(resArr);
     const workbook = utils.book_new();
     utils.book_append_sheet(workbook, worksheet, "Valuation");
